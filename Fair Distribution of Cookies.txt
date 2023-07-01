@@ -1,0 +1,26 @@
+class Solution {
+public:
+     int ans=INT_MAX;
+    void helper(vector<int>& cookies,int index, vector<int> &v,int k,int n){
+        if(index==n){
+            int total=INT_MIN;
+            for(int i=0;i<k;i++){
+                total=max(total,v[i]);
+            }
+            ans=min(ans,total);
+            return ;
+        }
+        for(int i=0;i<k;i++){
+            v[i]+=cookies[index];
+            helper(cookies,index+1,v,k,n);
+            v[i]-=cookies[index];
+        }
+
+    }
+    int distributeCookies(vector<int>& cookies, int k) {
+        int index=0,n=cookies.size();
+        vector<int> v(k,0);
+        helper(cookies,index,v,k,n);
+        return ans;
+    }
+};
