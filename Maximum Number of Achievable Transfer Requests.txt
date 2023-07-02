@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maxcount=0;
+    void helper(int n,vector<int> &v,int index,int count,vector<vector<int>>& requests){
+        if(index ==  n){
+            for(auto a:v){
+                if(a!=0) return ;
+            }
+            maxcount=max(maxcount,count);
+            return ;
+        }
+
+        int from=requests[index][0];
+        int to=requests[index][1];
+        v[from]--;
+        v[to]++;
+        helper(n,v,index+1,count+1,requests);
+        v[from]++;
+        v[to]--;
+        helper(n,v,index+1,count,requests);
+
+    }
+    int maximumRequests(int N, vector<vector<int>>& requests) {
+        int n=requests.size();
+        vector<int> v(N,0);
+        helper(n,v,0,0,requests);
+        return  maxcount;
+    }
+};
