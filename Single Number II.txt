@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int ones=0;
+        int tows=0;
+
+        for(auto a:nums){
+          ones=(ones ^ a) & ~tows;
+          tows=(tows ^ a) & ~ones;
+        }
+        return ones;
+    }
+};
