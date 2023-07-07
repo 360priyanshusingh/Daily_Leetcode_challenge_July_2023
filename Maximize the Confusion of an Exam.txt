@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int count(string answerKey,int k,char ch){
+
+        int i=0,j=0;
+        int n=answerKey.size();
+        int c=0;
+        int m=0;
+        while(i<n){
+            if(ch!=answerKey[i]) {
+                c++;
+            }
+            while(j<=i && c>k){
+               if(ch!=answerKey[j]){
+                c--;
+              }
+              j++;
+            }
+
+            m=max(m,i-j+1);
+            i++;
+        }
+
+      return m;
+    }
+    int maxConsecutiveAnswers(string answerKey, int k) {
+        return max(count(answerKey,k,'T'),count(answerKey,k,'F'));
+    }
+};
