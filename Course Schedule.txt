@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool is_cycle(int node,vector<int> &visited, vector<int> adj[]){
+        if(visited[node]==2) return true;
+        visited[node]=2;
+        for(auto it:adj[node])
+        { 
+               if(visited[it]!=1){
+                if(is_cycle(it,visited,adj))
+                return true;
+               }
+               
+        }
+        visited[node]=1;
+    return false;
+}
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+    vector<int> adj[numCourses];
+    vector<int> visited(numCourses,0);
+
+    for(int i=0;i<prerequisites.size();i++){
+        int u=prerequisites[i][0];
+        int v=prerequisites[i][1];
+        adj[u].push_back(v);
+       
+    }
+    
+    for(int i=0; i<numCourses ; i++ ){
+        if(visited[i]==0){
+             if(is_cycle(i,visited,adj))
+                return false;
+        }
+           
+    }
+    
+    return true;
+    }
+};
