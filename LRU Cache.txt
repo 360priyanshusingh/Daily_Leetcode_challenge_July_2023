@@ -1,0 +1,85 @@
+class Node{
+    public:
+    int key;
+    int value;
+    Node *prev;
+    Node *next;
+    
+    Node(long key_,long value_){
+        this->key=key_;
+        this->value=value_; 
+    }
+};
+
+class LRUCache {
+    map<int,Node*> mp;
+    int cap;
+    int cuncap;
+public:
+    Node *head=new Node(-1,-1);
+    Node *tail=new Node(-1,-1);
+    LRUCache(int capacity) {
+        cap=capacity;
+        head->next=tail;
+        tail->prev=head;
+        cuncap=0;
+        
+    }
+    
+    void addnode(Node *tem){
+        Node *tem1=head->next;
+        head->next=tem;
+        tem->prev=head;
+        tem->next=tem1;
+        tem1->prev=tem;
+          
+    }
+    
+    void removenode(Node *tem){
+        Node *tem1=tem->prev;
+         Node *tem2=tem->next;
+        tem1->next=tem2;
+        tem2->prev=tem1;
+    }
+    
+    int get(int key_) {
+        if(mp.find(key_)!=mp.end())
+        {
+            Node *tem=mp[key_];
+            int ans=tem->value;
+            removenode(tem);
+            mp.erase(key_);
+            addnode(tem);
+            mp[key_]=head->next;
+            return ans;
+            
+        }
+        return -1;
+        
+    }
+    
+    void put(int key_, int value_) {
+         if(mp.find(key_)!=mp.end())
+           {
+              Node *tem=mp[key_];
+              mp.erase(key_);
+              removenode(tem); 
+          }
+     
+          if(cap==mp.size())
+           {
+              Node *tem=tail->prev;
+              mp.erase(tem->key);
+              removenode(tem);
+           
+            }
+              
+            Node *newnode= new Node(key_,value_);
+            addnode(newnode);
+            mp[key_]=newnode;
+       
+              return;
+          
+        
+    }
+};
