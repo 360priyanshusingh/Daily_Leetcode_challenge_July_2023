@@ -1,0 +1,39 @@
+  struct node *Reverse(struct node *head){
+         
+         if(head==NULL || head->next==NULL) return head;
+         
+         node *ans=Reverse(head->next);
+         node *tem=head->next;
+         tem->next=head;
+         head->next=NULL;
+         return ans;
+         
+     }
+     
+    struct node * reverse (struct node *head, int k)
+    { 
+        // Complete this method
+        if(head==NULL) return head;
+        struct node *tem=head;
+        int s=1;
+        
+        
+        while(s<k  && tem!=NULL){
+            tem=tem->next;
+            s++;
+        }
+        
+       struct node * new_node=tem;
+       if(tem!=NULL){
+          
+        new_node=tem->next;
+        tem->next=NULL;
+        
+       }
+        
+        node *nnode=Reverse(head);
+        struct node *ans=reverse(new_node,k);
+        head->next=ans;
+        return nnode;
+    }
+};
