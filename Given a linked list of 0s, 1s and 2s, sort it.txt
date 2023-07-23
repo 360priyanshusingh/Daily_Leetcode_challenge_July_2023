@@ -1,0 +1,19 @@
+ Node* segregate(Node *head) {
+        
+        // Add code here
+        multiset<int> m;
+        
+        while(head!=NULL){
+            m.insert(head->data);
+            head=head->next;
+        }
+        Node *dumy = new Node(0);
+        Node  *tem=dumy;
+        
+        for(auto a:m){
+            dumy->next= new Node(a);
+            dumy=dumy->next;
+        }
+        
+        return tem->next;
+    }
