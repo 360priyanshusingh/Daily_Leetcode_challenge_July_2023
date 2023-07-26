@@ -1,0 +1,45 @@
+class Solution {
+public:
+
+     double func(vector<int>&dist,int k)
+    {
+        double ans=0;
+        int n = dist.size();
+        for(int i=0;i<n;i++)
+        {
+            if(i==n-1)
+            {
+                ans+= (1.0*dist[i])/k;
+            }
+            else
+            {
+                ans += dist[i]/k;
+                if(dist[i]%k>0)
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    int minSpeedOnTime(vector<int>& dist, double hour) {
+        long long l=1,h=1e9;
+        long long ans=h;
+
+        while(l<=h){
+            long long mid=(l+h)/2;
+
+            double x=func(dist,mid);
+
+             if(x<=hour){
+                ans=min(ans,mid);
+                h=mid-1;
+            }
+            else{
+                l=mid+1;
+            }
+
+        }
+
+        return ans==h ? -1: ans;
+    }
+};
