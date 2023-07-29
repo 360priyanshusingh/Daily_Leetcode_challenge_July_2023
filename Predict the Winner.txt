@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int dp[22][22][2];
+    long long  dfs(int i,int j,vector<int>& nums,int chance){
+        if(i>j)  return 0;
+        if(dp[i][j][chance]!=-1) return dp[i][j][chance];
+        if(chance){
+            return dp[i][j][chance]=max(nums[i]+dfs(i+1,j,nums,0),nums[j]+dfs(i,j-1,nums,0));
+        }
+        else{
+            return dp[i][j][chance]=min(dfs(i+1,j,nums,1),dfs(i,j-1,nums,1));
+        }
+
+    }
+    bool PredictTheWinner(vector<int>& nums) {
+        long long one=0, two=0;
+        int n=nums.size();
+        memset(dp,-1,sizeof(dp));
+        one=dfs(0,n-1,nums,1);
+        two=dfs(0,n-1,nums,0);;
+        return one>=two;
+    }
+};
