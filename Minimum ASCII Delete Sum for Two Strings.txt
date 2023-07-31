@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int dfs(string &s1,string &s2,int i,int j,vector<vector<int>> &dp){
+
+        if(i<0 || j<0){
+            int cnt=0;
+            while(i>=0) cnt+=s1[i--];
+            while(j>=0) cnt+=s2[j--];
+            return cnt;
+        }
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s1[i]==s2[j]){
+            return dp[i][j]=dfs(s1,s2,i-1,j-1,dp);
+        }
+        
+        return dp[i][j]=min(s1[i]+dfs(s1,s2,i-1,j,dp),s2[j]+dfs(s1,s2,i,j-1,dp));
+    }
+    int minimumDeleteSum(string s1, string s2) {
+        int n=s1.size();
+        int m=s2.size();
+        vector<vector<int>> dp(n+1,vector<int> (m+1,-1));
+        return dfs(s1,s2,n-1,m-1,dp);
+    }
+};
